@@ -6,7 +6,7 @@ const router = Router()
 router.get('/', async (req, res) => {
   const courses = await Course.find().lean()
 
-  res.render('course/index', {
+  res.render('courses/index', {
     title: 'Courses',
     isCourses: true,
     courses
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/new', (req, res) => {
-  res.render('course/new', {
+  res.render('courses/new', {
     title: 'Add new course',
     isNewCourse: true
   })
@@ -23,7 +23,7 @@ router.get('/new', (req, res) => {
 router.get('/:id', async (req, res) => {
   const course = await Course.findById(req.params.id).lean()
 
-  res.render('course/show', {
+  res.render('courses/show', {
     title: `Course ${course.title}`,
     layout: 'blank',
     course
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
   const course = await Course.findById(req.params.id).lean()
 
-  res.render('course/edit', {
+  res.render('courses/edit', {
     title: `Edit course ${course.title}`,
     course
   })
@@ -45,24 +45,24 @@ router.post('/', async (req, res) => {
 
   try {
     await course.save()
-    res.redirect('/course')
+    res.redirect('/courses')
   } catch (err) {
     console.log(err)
   }
 
 })
 
-router.post('/edit', async (req, res) => {
+router.post('/:id', async (req, res) => {
   const { _id, title, price, image } = req.body
   await Course.findByIdAndUpdate(_id, { title, price, image })
-  res.redirect('/course')
+  res.redirect('/courses')
 })
 
-router.post('/remove', async (req, res) => {
+router.post('/:id/remove', async (req, res) => {
   const { _id } = req.body
   try {
     await Course.deleteOne({ _id })
-    res.redirect('/course')
+    res.redirect('/courses')
   } catch (err) {
     console.log(err)
   }

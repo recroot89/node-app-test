@@ -22,7 +22,7 @@ app.set('views', 'views')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use('/', homeRoute)
-app.use('/course', courseRoutes)
+app.use('/courses', courseRoutes)
 app.use('/cart', cartRoutes)
 
 const PORT = process.env.PORT || 3000
