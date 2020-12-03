@@ -1,14 +1,15 @@
-const uuid = require('uuid/v4')
+const { Schema, model } = require('mongoose')
 
-class Course {
-  constructor(title, price, image) {
-    this.id = uuid()
-    this.title = title
-    this.price = price
-    this.image = image
-  }
+const course = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  image: String
+})
 
-  save() {
-
-  }
-}
+module.exports = model('Course', course)

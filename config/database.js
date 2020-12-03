@@ -9,13 +9,13 @@ const MONGO_DB = 'nodeapp'
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 }
 
 const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`
 
 function start() {
   mongoose.connect(url, options)
-    .then(() => console.log('MongoDB is connected'))
     .catch(err => console.log(err))
 }
 
