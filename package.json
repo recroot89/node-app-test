@@ -4,18 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node bin/index.js",
+    "dev": "nodemon bin/index.js",
+    "test": "npx jest"
   },
   "author": "recroot89",
   "license": "ISC",
+  "homepage": "https://github.com/recroot89/node-app-test",
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
-    "mongoose": "^5.11.1"
+    "mongoose": "^5.11.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@jest/globals": "^26.6.2",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
     "nodemon": "^2.0.6"
   }
 }

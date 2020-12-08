@@ -1,14 +1,18 @@
 require('dotenv').config()
-const express = require('express')
-const path = require('path')
-const expressHandlebars = require('express-handlebars')
 const db = require('./config/database')
+const express = require('express')
+const expressHandlebars = require('express-handlebars')
+const morgan = require('morgan')
+const path = require('path')
 
 const homeRoute = require('./routes/home')
+const authRoutes = require('./routes/auth')
 const courseRoutes = require('./routes/course')
 const cartRoutes = require('./routes/cart')
 
 const app = express()
+
+app.use(morgan('combined'))
 
 const hbs = expressHandlebars.create({
   defaultLayout: 'main',
@@ -21,9 +25,11 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
+
 app.use('/', homeRoute)
 app.use('/courses', courseRoutes)
 app.use('/cart', cartRoutes)
+app.use('/auth', authRoutes)
 
 const PORT = process.env.PORT || 3000
 
@@ -38,4 +44,4 @@ function start() {
   }
 }
 
-start()
+module.exports = start
