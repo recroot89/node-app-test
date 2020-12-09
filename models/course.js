@@ -10,6 +10,6 @@ const course = new Schema({
     required: true
   },
   image: String
-})
+}, { timestamps: true })
 
 module.exports = model('Course', course)
