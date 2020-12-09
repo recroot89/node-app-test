@@ -4,11 +4,15 @@ const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const morgan = require('morgan')
 const path = require('path')
+const session = require('express-session')
+const MongoStore = require('connect-mongodb-session')(session)
 
 const homeRoute = require('./routes/home')
 const authRoutes = require('./routes/auth')
 const courseRoutes = require('./routes/course')
 const cartRoutes = require('./routes/cart')
+
+const localsMiddleware = require('./middlewares/locals')
 
 const app = express()
 
@@ -19,12 +23,24 @@ const hbs = expressHandlebars.create({
   extname: 'hbs'
 })
 
+const store = new MongoStore({
+  collection: 'sessions',
+  uri: db.url
+})
+
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
+app.use(session({
+  secret: 'some secret',
+  resave: false,
+  saveUninitialized: false,
+  store
+}))
+app.use(localsMiddleware)
 
 app.use('/', homeRoute)
 app.use('/courses', courseRoutes)
