@@ -1,6 +1,7 @@
 <h1>Edit course</h1>
 
 <form action="/courses/{{course._id}}" method="post" class="course-form">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <div class="input-field">
     <input id="title" name="title" type="text" class="validate" value="{{course.title}}" required>
     <label for="title">Course name</label>
@@ -22,6 +23,7 @@
 </form>
 
 <form action="/courses/{{course._id}}/remove" method="post">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <input type="hidden" name="_id" value="{{course._id}}">
   <button type="submit" class="btn red">Delete</button>
 </form>
