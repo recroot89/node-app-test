@@ -10,6 +10,7 @@
     <div id="login" class="col s6 offset-s3">
       <h1>Enter the app</h1>
       <form action="/auth/login" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="input-field">
           <input id="email" name="email" type="text" class="validate" required>
           <label for="email">Email</label>
@@ -27,6 +28,7 @@
     <div id="register" class="col s6 offset-s3">
       <h1>Create account</h1>
       <form action="/auth/register" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <div class="input-field">
           <input id="remail" name="email" type="text" class="validate" required>
           <label for="remail">Email</label>

@@ -1,6 +1,7 @@
 <h1>New course</h1>
 
 <form action="/courses" method="post">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <div class="input-field">
     <input id="title" name="title" type="text" class="validate" required>
     <label for="title">Course name</label>

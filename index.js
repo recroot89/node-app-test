@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const path = require('path')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
+const csrf = require('csurf')
 
 const homeRoute = require('./routes/home')
 const authRoutes = require('./routes/auth')
@@ -40,6 +41,7 @@ app.use(session({
   saveUninitialized: false,
   store
 }))
+app.use(csrf())
 app.use(localsMiddleware)
 
 app.use('/', homeRoute)
