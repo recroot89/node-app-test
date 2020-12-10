@@ -1,5 +1,5 @@
 require('dotenv').config()
-const db = require('./config/database')
+const db = require('../config/database')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const morgan = require('morgan')
@@ -32,9 +32,9 @@ const store = new MongoStore({
 
 app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
-app.set('views', 'views')
+app.set('views', 'app/views')
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: 'some secret',
