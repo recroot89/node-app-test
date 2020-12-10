@@ -12,6 +12,7 @@
   "license": "ISC",
   "homepage": "https://github.com/recroot89/node-app-test",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-mongodb-session": "^2.4.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

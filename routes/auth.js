@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
 const router = Router()
@@ -11,16 +12,29 @@ router.get('/login', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  const { email } = req.body
-  const user = await User.findOne({ email })
-  req.session.user = user
-  req.session.isAuthenticated = true
-  req.session.save((err) => {
-    if (err) {
-      throw err
+  try {
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
+    if (user) {
+      const passwordIsValid = await bcrypt.compare(password, user.password)
+      if (passwordIsValid) {
+        req.session.user = user
+        req.session.isAuthenticated = true
+        req.session.save((err) => {
+          if (err) {
+            throw err
+          }
+          res.redirect('/')
+        })
+      } else {
+        res.redirect('/auth/login#login')
+      }
+    } else {
+      res.redirect('/auth/login#login')
     }
-    res.redirect('/')
-  })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.get('/logout', async (req, res) => {
@@ -36,8 +50,9 @@ router.post('/register', async (req, res) => {
     if (existingUser) {
       res.redirect('/auth/login#register')
     } else {
+      const passwordDigest = await bcrypt.hash(password, 12)
       const user = new User({
-        email, password, name, cart: { items: [] }
+        email, password: passwordDigest, name, cart: { items: [] }
       })
       await user.save()
       res.redirect('/auth/login#login')
@@ -46,4 +61,5 @@ router.post('/register', async (req, res) => {
     console.log(err)
   }
 })
+
 module.exports = router
