@@ -7,6 +7,7 @@ const path = require('path')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
+const flash = require('connect-flash')
 
 const homeRoute = require('./routes/home')
 const authRoutes = require('./routes/auth')
@@ -42,6 +43,7 @@ app.use(session({
   store
 }))
 app.use(csrf())
+app.use(flash())
 app.use(localsMiddleware)
 
 app.use('/', homeRoute)
