@@ -12,6 +12,7 @@
   "license": "ISC",
   "homepage": "https://github.com/recroot89/node-app-test",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.4.1",
@@ -20,6 +21,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
+    "handlebars": "^4.7.6",
     "mongoose": "^5.11.1",
     "morgan": "^1.10.0"
   },

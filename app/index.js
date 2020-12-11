@@ -1,13 +1,16 @@
 require('dotenv').config()
-const db = require('../config/database')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
+const Handlebars = require('handlebars')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const morgan = require('morgan')
 const path = require('path')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
 const flash = require('connect-flash')
+const db = require('../config/database')
+const helpers = require('./helpers/handlebars')
 
 const homeRoute = require('./routes/home')
 const authRoutes = require('./routes/auth')
@@ -22,7 +25,9 @@ app.use(morgan('combined'))
 
 const hbs = expressHandlebars.create({
   defaultLayout: 'main',
-  extname: 'hbs'
+  extname: 'hbs',
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
+  helpers
 })
 
 const store = new MongoStore({

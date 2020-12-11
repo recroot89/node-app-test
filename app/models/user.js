@@ -26,6 +26,10 @@ const user = new Schema({
   }
 }, { timestamps: true })
 
+user.virtual('id').get(function() {
+  return this._id.toHexString()
+})
+
 user.methods.addToCart = function(course) {
 
 }

@@ -295,6 +295,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@handlebars/allow-prototype-access@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@handlebars/allow-prototype-access/-/allow-prototype-access-1.0.3.tgz#c1377438ba59da7d45db43e3be7d6f3eeece8103"
+  integrity sha512-UjIJnXYirTtSuRAC/3Sq+2XCRd3+JBW5+wQVu7cRCXisvEj/u/913QKH3D5+YVyJkz6cAyD70sQkaL5zvXql5Q==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
