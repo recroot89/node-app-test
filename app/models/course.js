@@ -9,7 +9,8 @@ const course = new Schema({
     type: Number,
     required: true
   },
-  image: String
+  image: String,
+  description: String
 }, { timestamps: true })
 
 module.exports = model('Course', course)

@@ -4,13 +4,16 @@ const Course = require('../models/course')
 const router = Router()
 
 router.get('/', async (req, res) => {
-  const courses = await Course.find().lean()
-
-  res.render('courses/index', {
-    title: 'Courses',
-    isCourses: true,
-    courses
-  })
+  try {
+    const courses = await Course.find()
+    res.render('courses/index', {
+      title: 'Courses',
+      isCourses: true,
+      courses
+    })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.get('/new', (req, res) => {
@@ -21,7 +24,7 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-  const course = await Course.findById(req.params.id).lean()
+  const course = await Course.findById(req.params.id)
 
   res.render('courses/show', {
     title: `Course ${course.title}`,
@@ -31,7 +34,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.get('/:id/edit', async (req, res) => {
-  const course = await Course.findById(req.params.id).lean()
+  const course = await Course.findById(req.params.id)
 
   res.render('courses/edit', {
     title: `Edit course ${course.title}`,
@@ -40,8 +43,8 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { title, price, image } = req.body
-  const course = new Course({ title, price, image })
+  const { title, price, image, description } = req.body
+  const course = new Course({ title, price, image, description })
 
   try {
     await course.save()
@@ -49,12 +52,11 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.log(err)
   }
-
 })
 
 router.post('/:id', async (req, res) => {
-  const { _id, title, price, image } = req.body
-  await Course.findByIdAndUpdate(_id, { title, price, image })
+  const { id, title, price, image, description } = req.body
+  await Course.findByIdAndUpdate(id, { title, price, image, description })
   res.redirect('/courses')
 })
 
