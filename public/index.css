@@ -39,6 +39,6 @@
   border-radius: 10px;
   text-align: center;
   margin-bottom: 1rem;
-  background: rgba(255, 0, 0, 3);
-  color: red;
+  background: pink;
+  color: #9C3046;
 }
