@@ -1,12 +1,11 @@
 const mongoose = require('mongoose')
-
 const {
   MONGO_USERNAME,
   MONGO_PASSWORD,
   MONGO_HOSTNAME,
   MONGO_PORT,
   MONGO_DB
-} = process.env;
+} = require('./variables')
 
 const options = {
   useNewUrlParser: true,
@@ -16,9 +15,14 @@ const options = {
 
 const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`
 
-function start() {
+function connect() {
   mongoose.connect(url, options)
     .catch(err => console.log(err))
 }
 
-module.exports = { start, url }
+function disconnect() {
+  mongoose.disconnect(url, options)
+    .catch(err => console.log(err))
+}
+
+module.exports = { connect, disconnect, url }

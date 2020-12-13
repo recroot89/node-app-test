@@ -2,11 +2,11 @@
   "name": "node-app-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
-    "start": "node bin/index.js",
-    "dev": "nodemon bin/index.js",
-    "test": "npx jest"
+    "start": "NODE_ENV=production node bin/index.js",
+    "dev": "NODE_ENV=development nodemon bin/index.js",
+    "test": "NODE_ENV=test jest"
   },
   "author": "recroot89",
   "license": "ISC",
