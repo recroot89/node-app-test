@@ -1,4 +1,4 @@
 #!/usr/bin/node
-const start = require('../app/index')
+const start = require('../app/server')
 
 start()
