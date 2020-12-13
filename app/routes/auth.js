@@ -1,5 +1,7 @@
 const { Router } = require('express')
 const bcrypt = require('bcryptjs')
+const { validationResult } = require('express-validator')
+const { registerValidator } = require('../validators/register')
 const User = require('../models/user')
 
 const router = Router()
@@ -47,23 +49,25 @@ router.get('/logout', async (req, res) => {
   })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', registerValidator, async (req, res) => {
   try {
-    const { email, password, repeat, name } = req.body
-    const existingUser = await User.findOne({ email })
-    if (existingUser) {
-      req.flash('registerError', 'The user with this email already exists.')
-      res.redirect('/auth/login#register')
-    } else {
-      const passwordDigest = await bcrypt.hash(password, 12)
-      const user = new User({
-        email, password: passwordDigest, name, cart: { items: [] }
-      })
-      await user.save()
-      res.redirect('/auth/login#login')
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      req.flash('registerError', errors.array()[0].msg)
+      return res.status(422).redirect('/auth/login#register')
     }
+
+    const { email, password, name } = req.body
+    const passwordDigest = await bcrypt.hash(password, 12)
+    const user = new User({
+      email, password: passwordDigest, name, cart: { items: [] }
+    })
+    await user.save()
+    res.redirect('/auth/login#login')
   } catch (err) {
     console.log(err)
+    req.flash('registerError', 'Something went wrong.')
+    res.status(501).redirect('/auth/login#register')
   }
 })
 
