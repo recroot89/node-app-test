@@ -9,7 +9,7 @@ const MongoStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
 const flash = require('connect-flash')
 
-const { SESSION_SECRET } = require('../config/variables')
+const { NODE_ENV, SESSION_SECRET } = require('../config/variables')
 const db = require('../config/database')
 const helpers = require('./helpers/handlebars')
 
@@ -22,7 +22,9 @@ const localsMiddleware = require('./middlewares/locals')
 
 const app = express()
 
-app.use(morgan('combined'))
+if (NODE_ENV !== 'test') {
+  app.use(morgan('combined'))
+}
 
 const hbs = expressHandlebars.create({
   defaultLayout: 'main',

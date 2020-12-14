@@ -18,11 +18,7 @@ const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${M
 function connect() {
   mongoose.connect(url, options)
     .catch(err => console.log(err))
+  console.log('MongoDB connected')
 }
 
-function disconnect() {
-  mongoose.disconnect(url, options)
-    .catch(err => console.log(err))
-}
-
-module.exports = { connect, disconnect, url }
+module.exports = { connect, url }
