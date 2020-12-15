@@ -2,15 +2,22 @@
   "name": "node-app-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
-    "start": "node bin/index.js",
-    "dev": "nodemon bin/index.js",
-    "test": "npx jest"
+    "start": "NODE_ENV=production node bin/index.js",
+    "dev": "NODE_ENV=development nodemon bin/index.js",
+    "test": "NODE_ENV=test jest --force-exit",
+    "test:watch": "NODE_ENV=test jest --watch"
   },
   "author": "recroot89",
   "license": "ISC",
   "homepage": "https://github.com/recroot89/node-app-test",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
     "bcryptjs": "^2.4.3",
@@ -34,6 +41,8 @@
     "eslint-plugin-jest": "^24.1.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "nodemon": "^2.0.6"
+    "jest-supertest-matchers": "^0.0.2",
+    "nodemon": "^2.0.6",
+    "supertest": "^6.0.1"
   }
 }
