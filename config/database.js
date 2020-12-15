@@ -21,4 +21,30 @@ function connect() {
   console.log('MongoDB connected')
 }
 
-module.exports = { connect, url }
+function disconnect() {
+  mongoose.disconnect()
+  console.log('MongoDB disconnected')
+}
+
+async function clearAllCollections() {
+  const collections = Object.keys(mongoose.connection.collections)
+  for (const collectionName of collections) {
+    const collection = mongoose.connection.collections[collectionName]
+    await collection.deleteMany()
+  }
+}
+
+async function dropAllCollections() {
+  const collections = Object.keys(mongoose.connection.collections)
+  console.log(collections)
+  for (const collectionName of collections) {
+    const collection = mongoose.connection.collections[collectionName]
+    try {
+      await collection.drop()
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+}
+
+module.exports = { connect, disconnect, clearAllCollections, dropAllCollections, url }
