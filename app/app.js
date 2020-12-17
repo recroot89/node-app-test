@@ -19,6 +19,7 @@ const courseRoutes = require('./routes/course')
 const cartRoutes = require('./routes/cart')
 
 const localsMiddleware = require('./middlewares/locals')
+const { notFound, handleError } = require('./middlewares/error')
 
 const app = express()
 
@@ -58,5 +59,7 @@ app.use('/', homeRoute)
 app.use('/courses', courseRoutes)
 app.use('/cart', cartRoutes)
 app.use('/auth', authRoutes)
+app.use(notFound)
+app.use(handleError)
 
 module.exports = app
