@@ -1,4 +1,6 @@
 const { Router } = require('express')
+const { validationResult } = require('express-validator')
+const { courseValidator } = require('../validators/course')
 const Course = require('../models/course')
 
 const router = Router()
@@ -52,8 +54,19 @@ router.get('/:id/edit', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', courseValidator, async (req, res) => {
   const { title, price, image, description } = req.body
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render('courses/new', {
+      title: 'Add new course',
+      isNewCourse: true,
+      error: errors.array()[0].msg,
+      data: { title, price, image, description }
+    })
+  }
+
   const course = new Course({ title, price, image, description })
 
   try {
@@ -64,9 +77,14 @@ router.post('/', async (req, res) => {
   res.redirect('/courses')
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', courseValidator, async (req, res) => {
+  const { id, title, price, image, description } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).redirect(`/courses/${id}/edit`)
+  }
+
   try {
-    const { id, title, price, image, description } = req.body
     await Course.findByIdAndUpdate(id, { title, price, image, description })
   } catch (err) {
     console.log(err)
