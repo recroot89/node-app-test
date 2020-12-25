@@ -8,6 +8,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf')
 const flash = require('connect-flash')
+const fs = require('fs')
 
 const { NODE_ENV, SESSION_SECRET } = require('../config/variables')
 const db = require('../config/database')
@@ -24,7 +25,9 @@ const { notFound, handleError } = require('./middlewares/error')
 const app = express()
 
 if (NODE_ENV !== 'test') {
-  app.use(morgan('combined'))
+  app.use(morgan('dev'))
+  const httpLogStream = fs.createWriteStream(path.join(__dirname, '../tmp/http.log'), { flags: 'a' })
+  app.use(morgan('combined', { stream: httpLogStream }))
 }
 
 const hbs = expressHandlebars.create({
